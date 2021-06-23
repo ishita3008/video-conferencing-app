@@ -8,6 +8,7 @@ const{v4: uuidV4}=require('uuid');//importing v4 version of uuid
 const server = require('http').Server(app); //setting up express server to be used with further libraries
 
 app.set('view engine', 'ejs');//our view engine is going to be ejs
+app.use(express.static('public')); //static folder in public url
 
 app.get('/', (req, res)=>{
     res.redirect(`/${uuidV4()}`) //redirect to a page with a new gennerated id

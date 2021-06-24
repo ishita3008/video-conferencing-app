@@ -1,0 +1,11 @@
+/*reduce the size of video on the screen */
+#the_video_grid {
+    display: flex;
+    justify-content: center;
+}
+
+video {
+    height: 350px;
+    width: 450px;
+    object-fit: cover;
+}

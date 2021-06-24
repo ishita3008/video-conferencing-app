@@ -7,7 +7,7 @@ const ownVideo = document.createElement('video');// made an element of the type 
 ownVideo.muted = true;//muted our own video
 
 
-const peer = new Peer (undefined); //created a new peer
+const thePeer = new Peer (undefined); //created a new peer
 
 
 let myOwnVideoStream;
@@ -19,8 +19,8 @@ navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
     addingVideoStream(ownVideo, stream);
 
     //ans the call
-peer.on('call', call => {
-      call.answer(stream)
+thePeer.on('call', call => {
+      call.answer(stream)//answered the new peer's call
       const video = document.createElement('video')
       call.on('stream', userVideoStream => {
         addingVideoStream(video, userVideoStream)
@@ -35,16 +35,16 @@ peer.on('call', call => {
 
   
 
-peer.on('open', id =>{
+thePeer.on('open', id =>{
   socket.emit('join-room', ID_OF_ROOM, id);
  }) //we can join the room with that specific room id
 
   
 
   const connectToAnotherNewUser = (userId, stream) =>{ //send that new user our video
- console.log(userId);
+ //console.log(userId);
     //we will use peer to connect to our user
- const call = peer.call(userId, stream)//called our new peer and send our own stream
+ const call = thePeer.call(userId, stream)//called our new peer and send our own stream
  const video = document.createElement('video')
  call.on('stream', userVideoStream => {
    addingVideoStream(video, userVideoStream)

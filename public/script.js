@@ -1,4 +1,3 @@
-
 // all javascript for the front end 
 const socket = io('/')//importing socket.io
 const theVideoGrid = document.getElementById('the_video_grid')//we will put the videos in this variable
@@ -62,3 +61,20 @@ thePeer.on('open', id =>{
     })
     theVideoGrid.append(video)
   }
+
+  // input message
+  let messageText = $("input");
+ 
+  $('html').keydown( a=> {
+    if (a.which == 13 && messageText.val().length !== 0) {// when enter is pressed, send the message
+      //console.log(messageText.val());
+      socket.emit('message', messageText.val());//sending from the front end
+      messageText.val('')//clear the input
+    }
+  });
+
+//show message in chat using jquery
+ socket.on("create-a-Message", message => {
+   $("ul").append(`<li class="message"><b>user</b><br/>${message}</li>`);
+   //scrollToBottom()
+  })

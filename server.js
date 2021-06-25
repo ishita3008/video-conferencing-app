@@ -48,6 +48,10 @@ io.on('connection', socket => {
        // console.log("joined room");
        socket.join(roomId);//joined the room on that specific id
         socket.to(roomId).emit('user-connected', userId);//telling everyone that a user has been connected
+        socket.on('message', (message) => { //listen for the message
+            //send message to the same room in front end
+           io.to(roomId).emit('create-a-Message', message)
+        });
     })
     }); 
 

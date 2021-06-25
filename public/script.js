@@ -52,8 +52,6 @@ thePeer.on('open', id =>{
   }
 
  
-  
-
   const addingVideoStream=(video, stream) =>{ //adding it to stream
     video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
@@ -76,5 +74,10 @@ thePeer.on('open', id =>{
 //show message in chat using jquery
  socket.on("create-a-Message", message => {
    $("ul").append(`<li class="message"><b>user</b><br/>${message}</li>`);
-   //scrollToBottom()
+   scrolling()
   })
+
+  const scrolling =()=>{
+    let m= $('.main__chat_window');
+    m.scrollTop(m.prop("scrollHeight"));
+  }

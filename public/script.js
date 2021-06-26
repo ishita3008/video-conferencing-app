@@ -6,7 +6,12 @@ const ownVideo = document.createElement('video');// made an element of the type 
 ownVideo.muted = true;//muted our own video
 
 
-const thePeer = new Peer (undefined); //created a new peer
+const thePeer = new Peer (undefined,{
+  path: '/peerjs',
+  host: '/',
+  port: '443'
+  
+}); //created a new peer
 
 
 let myOwnVideoStream;

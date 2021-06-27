@@ -19,12 +19,12 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 </head>
-
+<body>
+   
 <div class="main">
   <div class="main__left">
      <div class="main__videos">
         <div id="the_video_grid">
-  
         </div>
      </div>
      <div class="main__controls">
@@ -38,10 +38,11 @@
               <span>Stop Video</span>
            </div>
         </div>
+        
         <div class="main__controls__block">
-           <div class="main__controls__button">
-              <i class="fas fa-shield-alt"></i>
-              <span>Security</span>
+           <div id="inviteButton" class="main__controls__button">
+            <i class="fas fa-user-plus"></i>
+              <span>Invite</span>
            </div>
            <div class="main__controls__button">
               <i class="fas fa-user-friends"></i>
@@ -63,15 +64,17 @@
      <div class="main__header">
         <h6>In-Call Messages</h6>
      </div>
-     <div class="main__chat_window">
-        <ul class="messages">
+     <div class="main__chat_rectangle">
+        <div class="messages">
            
-        </ul>
+        </div>
 
      </div>
      <div class="main__message_container">
         <input id="chat_message" type="text" placeholder="Type message here...">
-     </div>
+        <div id="send" class="main__controls__button">
+         <i class="fa fa-plus" aria-hidden="true"></i>
+      </div>
   </div>
 </div>
 

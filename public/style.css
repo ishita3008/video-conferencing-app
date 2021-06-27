@@ -7,12 +7,21 @@ body {/*removing the spacing at the top */
 #the_video_grid {
     display: flex;
     justify-content: center;
+    flex-grow: 1;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--main-dark);
 }
 
 video {
     height: 300px;
     width: 400px;
     object-fit: cover;
+    border-radius: 1rem;
+    margin: 0.5rem;
+    transform: rotateY(180deg);
+   -webkit-transform: rotateY(180deg);
+   -moz-transform: rotateY(180deg);
 }
 
 .main {
@@ -31,15 +40,15 @@ video {
 }
 .main__videos {
     flex-grow: 1;
-    background-color: black;
+    background-color: rgb(20, 20, 20);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 1 rem;
 }
 
 .main__controls {
-    background-color: #1C1E20;
+    background-color: #1c1d1f;
 }
 
 .main__right {
@@ -88,7 +97,7 @@ video {
     text-align: center;
 }
 
-.main__chat_window {
+.main__chat_rectangle {
     flex-grow: 1;
     overflow-y: auto;
 }

@@ -3,17 +3,21 @@ const socket = io('/')//importing socket.io
 const theVideoGrid = document.getElementById('the_video_grid')//we will put the videos in this variable
 console.log(theVideoGrid);
 const ownVideo = document.createElement('video');// made an element of the type video
+
 ownVideo.muted = true;//muted our own video
 
 
-const thePeer = new Peer (undefined,{
-  path: '/peerjs',
-  host: '/',
-  port: '443'
-  
-}); //created a new peer
+const user = prompt("Enter your name");//creating a prompt
 
+const thePeer = new Peer (undefined);
+//,{
+ // path: '/peerjs',
+ // host: '/',
+  //port: '443'
 
+//}); //created a new peer
+
+const peers={};//to keep a track of who joined the call
 let myOwnVideoStream;
 navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
     video: true,
@@ -37,10 +41,12 @@ thePeer.on('call', call => {
     })
   })
 
-  
+ /*socket.on('user-is-disconnected', userId =>{
+ if(peers[userId]) peer[userId].close();//only do this when some person is there in the room
+ }) */
 
 thePeer.on('open', id =>{
-  socket.emit('join-room', ID_OF_ROOM, id);
+  socket.emit('joining-the-room', ID_OF_ROOM, id, user);
  }) //we can join the room with that specific room id
 
   
@@ -53,8 +59,13 @@ thePeer.on('open', id =>{
  call.on('stream', userVideoStream => {
    addingVideoStream(video, userVideoStream)
  })
- 
-  }
+ call.on('close',()=>{
+   video.remove()
+   
+ })
+  
+//peers[userId]=call;//every user id is linked to the call
+}
 
  
   const addingVideoStream=(video, stream) =>{ //adding it to stream
@@ -65,8 +76,8 @@ thePeer.on('open', id =>{
     theVideoGrid.append(video)
   }
 
-  // input message
-  let messageText = $("input");
+let messages = document.querySelector(".messages");
+let messageText = $("input");
  
   $('html').keydown( a=> {
     if (a.which == 13 && messageText.val().length !== 0) {// when enter is pressed, send the message
@@ -77,18 +88,26 @@ thePeer.on('open', id =>{
   });
 
 //show message in chat using jquery
- socket.on("create-a-Message", message => {
-   $("ul").append(`<li class="message"><b>user</b><br/>${message}</li>`);
+ socket.on("create-a-Message", (message, userName) => {
+ //console.log(userName);
+  messages.innerHTML =
+  messages.innerHTML +
+  `<div class="messages">
+      <b><i class="far fa-user-circle"></i> <span> ${
+        userName === user ? "me" : userName 
+      }</span> </b>
+      <span>${message}</span>
+  </div>`;
    scrolling()
   })
 
   const scrolling =()=>{
-    let m= $('.main__chat_window');
+    let m= $('.main__chat_rectangle');
     m.scrollTop(m.prop("scrollHeight"));
   }
 
 //mute video
-  const muteUnmute = () => {
+  const mutingUnmuting = () => {
     const enabled = myOwnVideoStream.getAudioTracks()[0].enabled;
     if (enabled) {
       myOwnVideoStream.getAudioTracks()[0].enabled = false;//if theres an audio switch it off
@@ -115,7 +134,7 @@ thePeer.on('open', id =>{
     document.querySelector('.main__mute_button').innerHTML = html;
   }
 
-  const playStop = () => {
+  const videoStop = () => {
     
     let enabled = myOwnVideoStream.getVideoTracks()[0].enabled;
     if (enabled) {
@@ -142,3 +161,13 @@ thePeer.on('open', id =>{
     `
     document.querySelector('.main__video_button').innerHTML = html;
   }
+
+  const inviteButton = document.querySelector("#inviteButton");
+  inviteButton.addEventListener("click", (e) => {
+    prompt(
+      "Copy this link and send it to people you want to meet with",
+      window.location.href
+    );
+  });
+
+  

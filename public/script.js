@@ -5,18 +5,16 @@ console.log(theVideoGrid);
 const ownVideo = document.createElement('video');// made an element of the type video
 
 ownVideo.muted = true;//muted our own video
-
-
+var currentPeer;
 const user = prompt("Enter your name");//creating a prompt
 
 const thePeer = new Peer (undefined);
 //,{
  // path: '/peerjs',
  // host: '/',
-  //port: '443'
+  //port: '443'//using the port for turn server (coturn) which uses public ip addresses
 
 //}); //created a new peer
-
 const peers={};//to keep a track of who joined the call
 let myOwnVideoStream;
 navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
@@ -32,6 +30,7 @@ thePeer.on('call', call => {
       const video = document.createElement('video')
       call.on('stream', userVideoStream => {
         addingVideoStream(video, userVideoStream)
+        currentPeer= call.peerConnection
       })
     })
   
@@ -41,9 +40,9 @@ thePeer.on('call', call => {
     })
   })
 
- /*socket.on('user-is-disconnected', userId =>{
- if(peers[userId]) peer[userId].close();//only do this when some person is there in the room
- }) */
+ socket.on('user-is-disconnected', userId =>{
+ if(peers[userId]) peers[userId].close();//only do this when some person is there in the room
+ }) 
 
 thePeer.on('open', id =>{
   socket.emit('joining-the-room', ID_OF_ROOM, id, user);
@@ -58,13 +57,15 @@ thePeer.on('open', id =>{
  const video = document.createElement('video')
  call.on('stream', userVideoStream => {
    addingVideoStream(video, userVideoStream)
+   currentPeer= call.peerConnection
+  
  })
  call.on('close',()=>{
    video.remove()
    
  })
-  
-//peers[userId]=call;//every user id is linked to the call
+ peers[userId]=call;//every user id is linked to the call is stored
+
 }
 
  
@@ -76,6 +77,7 @@ thePeer.on('open', id =>{
     theVideoGrid.append(video)
   }
 
+  
 let messages = document.querySelector(".messages");
 let messageText = $("input");
  
@@ -105,6 +107,8 @@ let messageText = $("input");
     let m= $('.main__chat_rectangle');
     m.scrollTop(m.prop("scrollHeight"));
   }
+
+   
 
 //mute video
   const mutingUnmuting = () => {
@@ -169,5 +173,38 @@ let messageText = $("input");
       window.location.href
     );
   });
+ const shareScreen =()=>{
+  document.getElementById("screenShare").addEventListener('click',(e)=>{
+    navigator.mediaDevices.getDisplayMedia({
+      video: {
+        cursor: "always"
+      },
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true
+      }
+    }).then((stream)=>{
+      let videoTrack = stream.getVideoTracks()[0];
+      videoTrack.onended= function(){
+        stopScreenShare();
+      }
+      let sender = currentPeer.getSenders().find(function(s){
+        return s.track.kind == videoTrack.kind
+      })
+       sender.replaceTrack(videoTrack)
+    })
+  })
+  }
+  function stopScreenShare() {
+    let videoTrack=myOwnVideoStream.getVideoTracks()[0];
+    let sender = currentPeer.getSenders().find(function(s){
+      return s.track.kind == videoTrack.kind
+    })
+    sender.replaceTrack(videoTrack) 
 
-  
+  }
+  const cutCall = document.querySelector('.cutcall');
+
+cutCall.addEventListener('click', () => {
+    location.href = '/';
+})

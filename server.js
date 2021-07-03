@@ -12,14 +12,6 @@ const server = require('http').Server(app); //setting up express server to be us
 const io = require('socket.io')(server);//importing socket.io
 
 
-/*const io = require("socket.io")(server, {
-    cors: {
-        origin: "http://localhost:4200",
-        methods: ["GET", "POST"]
-    }
-})*/
-
-
 const { ExpressPeerServer } = require('peer');//imported peer
 const peerServer = ExpressPeerServer(server, {
   debug: true
@@ -39,25 +31,26 @@ app.get('/', (req, res)=>{
 
 
 app.get('/:room', (req, res) => {
-    res.render('room', { roomId: req.params.room }) //passed id to the front end
+    res.render('room', { id_of_the_room: req.params.room }) //passed id to the front end
   })
 
 
 io.on('connection', socket => {
-    socket.on('joining-the-room', (roomId, userId, userName) => {
+    socket.on('joining-the-room', (id_of_the_room, userId, userName) => {
        // console.log("joined room");
-       socket.join(roomId);//joined the room on that specific id
-        socket.to(roomId).emit('user-is-connected', userId);//telling everyone that a user has been connected
+       socket.join(id_of_the_room);//joined the room on that specific id
+        socket.to(id_of_the_room).emit('user-is-connected', userId);//telling everyone that a user has been connected
       
          socket.on('disconnect',()=>{
-            socket.to(roomId).emit('user-is-disconnected', userId);
+            socket.to(id_of_the_room).emit('user-is-disconnected', userId);
          // console.log('disconnectedd')
            
         })
         socket.on('message', (message) => { //listen for the message
             //send message to the same room in front end
-           io.to(roomId).emit('create-a-Message', message, userName)
+           io.to(id_of_the_room).emit('create-a-Message', message, userName)
         });
+
     })
     }); 
 

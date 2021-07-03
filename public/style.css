@@ -11,6 +11,7 @@ body {/*removing the spacing at the top */
     align-items: center;
     padding: 1rem;
     background-color: var(--main-dark);
+    
   
 }
 
@@ -22,7 +23,7 @@ video {
     margin: 0.5rem;
     transform: rotateY(180deg);
    -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
+    transform: scaleX(-1);
 }
 
 .main {
@@ -127,24 +128,7 @@ video {
 .unmute, .stop {
     color: #CC3B33;
 }
-/*
-.blur   {
-    filter: blur(5px);
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-}
-#overlay    {
-    position: fixed;
-    display: none;
-    left: 0px;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    background: rgba(255,255,255,.8);
-    z-index: 999;
-}*/
+
 #body{
     color:red;
     background:grey;

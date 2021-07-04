@@ -58,6 +58,11 @@ video {
     border-left: 1px solid #3D3D42;
 }
 
+.main__top {
+    background-color: rgb(20, 20, 20);
+    border-left: 1px solid #3D3D42;
+}
+
 .main__controls {
     color: #D2D2D2;
     display: flex;

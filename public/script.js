@@ -1,12 +1,15 @@
-// all javascript for the front end 
+// all javascript for a responsive front end 
+
 const socket = io('/')//importing socket.io
 const theVideoGrid = document.getElementById('the_video_grid')//we will put the videos in this variable
 console.log(theVideoGrid);
 const ownVideo = document.createElement('video');// made an element of the type video
 
+
 ownVideo.muted = true;//muted our own video
 var thisCurrentPeer;
-const user = prompt("Enter your name");//creating a prompt
+const storeName = prompt("Please enter your name");//creating a prompt
+
 
 const thePeer = new Peer (undefined);
 //,{
@@ -15,9 +18,14 @@ const thePeer = new Peer (undefined);
   //port: '443'//using the port for turn server (coturn) which uses public ip addresses
 
 //}); //created a new peer
+
+
 const allPeers={};//to keep a track of who joined the call
 let myOwnVideoStream;
+
+
 navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
+   
     video: true,
     audio: true
   }).then(stream => {
@@ -26,37 +34,45 @@ navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
 
     //ans the call
 thePeer.on('call', call => {
+
       call.answer(stream)//answered the new peer's call
       const video = document.createElement('video')
       call.on('stream', userVideoStream => {
         addingVideoStream(video, userVideoStream)
-        thisCurrentPeer= call.peerConnection
+        thisCurrentPeer= call.peerConnection//PeerConnection represents a WebRTC connection between the local computer and a remote peer
       })
     })
   
-
-    socket.on('user-is-connected',userId => {
-      connectToAnotherNewUser(userId, stream);
+socket.on('user-is-connected',userId => {//listening for messeage from the server
+     
+  connectToAnotherNewUser(userId, stream);
     })
+  
   })
 
- socket.on('user-is-disconnected', userId =>{
+socket.on('user-is-disconnected', userId =>{
+
  if(allPeers[userId]) allPeers[userId].close();//only do this when some person is there in the room
- }) 
+ 
+}) 
+
 
 thePeer.on('open', id =>{
-  socket.emit('joining-the-room', ID_OF_ROOM, id, user);
- }) //we can join the room with that specific room id
+
+  socket.emit('joining-the-room', ID_OF_ROOM, id, storeName);
+
+ }) //passing the info to server
 
 
-  const connectToAnotherNewUser = (userId, stream) =>{ //send that new user our video
+const connectToAnotherNewUser = (userId, stream) =>{ //send that new user our video
  //console.log(userId);
-    //we will use peer to connect to our user
+
+//we will use peer to connect to our user
  const call = thePeer.call(userId, stream)//called our new peer and send our own stream
  const video = document.createElement('video')
  call.on('stream', userVideoStream => {
    addingVideoStream(video, userVideoStream)
-   thisCurrentPeer= call.peerConnection
+   thisCurrentPeer= call.peerConnection//PeerConnection represents a WebRTC connection between the local computer and a remote peer
   
  })
  call.on('close',()=>{
@@ -68,12 +84,14 @@ thePeer.on('open', id =>{
 }
 
  
-  const addingVideoStream=(video, stream) =>{ //adding it to stream
-    video.srcObject = stream;
+const addingVideoStream=(video, stream) =>{ //adding it to stream
+    
+  video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
       video.play();
     })
     theVideoGrid.append(video)
+
   }
 
   
@@ -81,98 +99,121 @@ let messages = document.querySelector(".messages");
 let messageText = $("input");
  
   $('html').keydown( a=> {
+
     if (a.which == 13 && messageText.val().length !== 0) {// when enter is pressed, send the message
       //console.log(messageText.val());
       socket.emit('message', messageText.val());//sending from the front end
       messageText.val('')//clear the input
     }
+
   });
 
+
 //show message in chat using jquery
- socket.on("create-a-Message", (message, userName) => {
+socket.on("create-a-Message", (message, userName) => {
+
  //console.log(userName);
   messages.innerHTML =
   messages.innerHTML +
   `<div class="messages">
       <b><i class="far fa-user-circle"></i> <span> ${
-        userName === user ? "me" : userName 
+        userName === storeName ? "me" : userName //decide the name to be displayed by the message
       }</span> </b>
-      <span>${message}</span>
+      <span>${message}</span> 
   </div>`;
-   scrolling()
+   scrolling()//callng the scrolling function
+
   })
 
-  const scrolling =()=>{
+  //function to enable scrolling and default enabling the last message view
+const scrolling =()=>{
+
     let m= $('.main__chat_rectangle');
     m.scrollTop(m.prop("scrollHeight"));
+
   }
 
    
 
-//mute video
-  const mutingUnmuting = () => {
-    const enabled = myOwnVideoStream.getAudioTracks()[0].enabled;
+
+const mutingUnmuting = () => {
+
+    const enabled = myOwnVideoStream.getAudioTracks()[0].enabled;//check the status of audio
     if (enabled) {
       myOwnVideoStream.getAudioTracks()[0].enabled = false;//if theres an audio switch it off
      unmute();//change icon
     } else {
       mute();//change icon
       myOwnVideoStream.getAudioTracks()[0].enabled = true;//if theres not an audio switch it on
+
     }
   }
 
-  const mute = () => {
-    const html = `
+const mute = () => {//change icon
+   
+  const html = `
       <i class="fas fa-microphone"></i>
       <span>Mute</span>
     `
     document.querySelector('.main__mute_button').innerHTML = html;
+
   }
   
-  const unmute = () => {
-    const html = `
+const unmute = () => {//change icon
+    
+  const html = `
       <i class="unmute fas fa-microphone-slash"></i>
       <span>Unmute</span>
     `
     document.querySelector('.main__mute_button').innerHTML = html;
+
   }
 
-  const videoStop = () => {
+const videoStop = () => {
     
-    let enabled = myOwnVideoStream.getVideoTracks()[0].enabled;
+    let enabled = myOwnVideoStream.getVideoTracks()[0].enabled;//check the status of video
     if (enabled) {
       myOwnVideoStream.getVideoTracks()[0].enabled = false;//if theres a video switch it off
-    videoOn()//change icon
+      videoOn()//change icon
     } else {
       videoOff()//change icon
       myOwnVideoStream.getVideoTracks()[0].enabled = true;//if theres not a video switch it on
     }
+
   }
 
-  const videoOff = () => {
-    const html = `
+const videoOff = () => {//change icon
+    
+  const html = `
       <i class="fas fa-video"></i>
       <span>Stop Video</span>
     `
     document.querySelector('.main__video_button').innerHTML = html;
+
   }
   
-  const videoOn = () => {
-    const html = `
+const videoOn = () => {//change icon
+    
+  const html = `
     <i class="stop fas fa-video-slash"></i>
       <span>Play Video</span>
     `
     document.querySelector('.main__video_button').innerHTML = html;
+
   }
 
-  const inviteOthers = document.querySelector("#inviteButton");
+const inviteOthers = document.querySelector("#inviteButton");
   inviteOthers.addEventListener("click", (e) => {
+
     prompt(
       "Copy this link and invite others",
-      window.location.href
+      window.location.href // displays the URL of website
     );
+
   });
- const shareScreen =()=>{
+
+const shareScreen =()=>{
+
   document.getElementById("screenShare").addEventListener('click',(e)=>{
     navigator.mediaDevices.getDisplayMedia({
       video: {
@@ -183,27 +224,29 @@ let messageText = $("input");
         noiseSuppression: true
       }
     }).then((stream)=>{
-      let videoTrack = stream.getVideoTracks()[0];
+
+      let videoTrack = stream.getVideoTracks()[0];//stores the screen shared stream
       videoTrack.onended= function(){
         stopScreenShare();
+
       }
-      let sender = thisCurrentPeer.getSenders().find(function(s){
-        return s.track.kind == videoTrack.kind
+      let sender = thisCurrentPeer.getSenders().find(function(p){//getSenders() returns an array of RTCRtpSender objects, each of which represents the RTP sender responsible for transmitting one track's data.
+        return p.track.kind == videoTrack.kind // kind contains a string indicating the category of video in VideoTrack
       })
-       sender.replaceTrack(videoTrack)
+
+       sender.replaceTrack(videoTrack);
+
     })
   })
   }
-  function stopScreenShare() {
-    let videoTrack=myOwnVideoStream.getVideoTracks()[0];
-    let sender = thisCurrentPeer.getSenders().find(function(s){
-      return s.track.kind == videoTrack.kind
+
+
+function stopScreenShare() {
+
+    let videoTrack=myOwnVideoStream.getVideoTracks()[0];//stores the camera stream
+    let sender = thisCurrentPeer.getSenders().find(function(p){
+      return p.track.kind == videoTrack.kind
     })
-    sender.replaceTrack(videoTrack) 
+    sender.replaceTrack(videoTrack) //replaces camera stream back once screen share if off
 
   }
-  const cutCall = document.querySelector('.cutcall');
-
-cutCall.addEventListener('click', () => {
-    location.href = '/';
-})

@@ -6,30 +6,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rooms-Join to Connect</title>
+    <title>Rooms:Join to Connect</title>
     <script>
       const ID_OF_ROOM= "<%= id_of_the_room %>";
     </script>
    <!--bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!--css file-->
-    <link rel="stylesheet" href="style.css">
-    <!--peer js-->
-    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
-    <!--socket.io-->
-    <script src="/socket.io/socket.io.js"></script>
-    <!--font awesome for icons-->
-    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
-    <!--jquery-->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <!--bootstrap for js-->
+   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
- 
+   <!--font awesome for icons-->
+    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
+   <!--css file-->
+    <link rel="stylesheet" href="style.css">
+   <!--socket.io-->
+    <script src="/socket.io/socket.io.js"></script>
+   <!--peer js-->
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
    
+    
 </head>
 <body>
    
 <div class="main">
   <div class="main__left">
+<div class="main__top">
+   <!--Add date and time at the top-->
+   <script>function display_datetime() {
+      var d = new Date()
+      var amOrpm = d.getHours( ) >= 12 ? ' PM' : ' AM';
+      hours = d.getHours( ) % 12;
+      hours = hours ? hours : 12;
+      hours=hours.toString().length==1? 0+hours.toString() : hours;
+      
+      var minutes=d.getMinutes().toString()
+      minutes=minutes.length==1 ? 0+minutes : minutes;
+      
+      var seconds=d.getSeconds().toString()
+      seconds=seconds.length==1 ? 0+seconds : seconds;
+      
+      var month=(d.getMonth() +1).toString();
+      month=month.length==1 ? 0+month : month;
+      
+      var dt=d.getDate().toString();
+      dt=dt.length==1 ? 0+dt : dt;
+      
+      var date=dt + "/" + month + "/" + d.getFullYear(); 
+      date = date + " - " +  hours + ":" +  minutes + ":" +  seconds + " " + amOrpm;
+      document.getElementById('datetime').innerHTML = date;
+      display_c();
+       }
+       function display_c(){
+      var refresh=1000; // Refresh rate in milli seconds
+      displayTime=setTimeout('display_datetime()',refresh)
+      }
+      display_c()
+      </script>
+      <span id='datetime' style="color:#e9eaec; float:left; font-size:16px; font-weight:bold; margin-right: 12px;"></span>
+</div>
+
+
      <div class="main__videos">
         <div id="the_video_grid">
         </div>
@@ -49,7 +85,7 @@
         </div>
         
         <div class="main__controls__block">
-           <h3> Rooms : Join To Connect </h3>
+           <h3> Rooms: Join To Connect </h3>
 
            
         </div>
@@ -64,7 +100,6 @@
          <i class="fas fa-desktop"></i>
            <span>Screen Share</span>
         </div>
-
            </div>
         </div>
      </div>

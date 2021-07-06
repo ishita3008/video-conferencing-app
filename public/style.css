@@ -21,9 +21,9 @@ video {
     object-fit: cover;
     border-radius: 1rem;
     margin: 0.5rem;
-    transform: rotateY(180deg);
+   /* transform: rotateY(180deg);
    -webkit-transform: scaleX(-1);
-    transform: scaleX(-1);
+    transform: scaleX(-1);*/
 }
 
 .main {
@@ -96,6 +96,7 @@ video {
 .main__right {
     display: flex;
     flex-direction: column;
+    margin-left: auto;
 }
 
 .main__header {
@@ -117,6 +118,8 @@ video {
 .main__message_container {
     padding: 22px 12px;
     display: flex;
+    align-items: center;
+   justify-content: center;
 }
 
 .main__message_container input {
@@ -126,7 +129,7 @@ video {
     color: #F5F5F5;
 }
 
-.leave_meeting {
+.btn {
     color: #EB534B;
 }
 

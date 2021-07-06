@@ -24,9 +24,12 @@ app.use('/peerjs', peerServer);//specific peer which url we are using
 app.set('view engine', 'ejs');//our view engine is going to be ejs
 app.use(express.static('public')); //static folder in public url
 
-
 app.get('/', (req, res)=>{
-    res.redirect(`/${uuidV4()}`) //redirect to a page with a new gennerated id
+  res.render('home') //redirect to a page with a new gennerated id
+})
+
+app.get('/join', (req, res)=>{
+ res.redirect(`/${uuidV4()}`) //redirect to a page with a new gennerated id
 })
 
 
@@ -55,4 +58,4 @@ io.on('connection', socket => {
     }); 
 
 server.listen(process.env.PORT||3010); //server will be a local host andd the port will be 3010 
-
+  

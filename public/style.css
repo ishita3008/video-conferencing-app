@@ -2,6 +2,7 @@
 body {/*removing the spacing at the top */
   margin: 0;
   padding: 0;
+  background-image: url(black.png);
 }
 /*reduce the size of video on the screen */
 #the_video_grid {
@@ -29,6 +30,7 @@ video {
 .main {
     height: 100vh;
     display: flex;
+    background-image: url(black.png);
 }
 
 .main__left {
@@ -42,25 +44,29 @@ video {
 }
 .main__videos {
     flex-grow: 1;
-    background-color: rgb(20, 20, 20);
+    /*background-color: rgb(20, 20, 20);*/
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 1 rem;
+  
 }
 
 .main__controls {
-    background-color: #1c1d1f;
+   /* background-color: #1c1d1f;*/
+   border-top: 1px solid #3D3D42;
+    
+    
 }
 
 .main__right {
-    background-color: #242324;
+    background-color: #141314;
     border-left: 1px solid #3D3D42;
 }
 
 .main__top {
-    background-color: rgb(20, 20, 20);
-    border-left: 1px solid #3D3D42;
+    /*background-color: #242324;*/
+  
 }
 
 .main__controls {
@@ -108,6 +114,7 @@ video {
 .main__chat_rectangle {
     flex-grow: 1;
     overflow-y: auto;
+
 }
 
 .messages{
@@ -115,11 +122,18 @@ video {
     list-style: none;
 }
 
+
+
+
+
+
+
 .main__message_container {
     padding: 22px 12px;
     display: flex;
     align-items: center;
    justify-content: center;
+   
 }
 
 .main__message_container input {
@@ -128,6 +142,7 @@ video {
     border: none;
     color: #F5F5F5;
 }
+
 
 .btn {
     color: #EB534B;

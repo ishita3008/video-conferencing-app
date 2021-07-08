@@ -14,7 +14,7 @@ const storeName = prompt("Please enter your name");//creating a prompt
 const thePeer = new Peer(undefined)//,{
 //path: '/peerjs',
 //host: '/',
-//port: '443'//using the port for turn server (coturn) which uses public ip addresses
+//port: '443'//using the port for deployment 
 
 //}); //created a new peer
 
@@ -35,13 +35,13 @@ navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
 
     call.answer(stream)//answered the new peer's call
     const video = document.createElement('video')
-    call.on('stream', userVideoStream => {
+    call.on('stream', (userVideoStream) => {
       addingVideoStream(video, userVideoStream)
       thisCurrentPeer = call.peerConnection//PeerConnection represents a WebRTC connection between the local computer and a remote peer
     })
   })
 
-  socket.on('user-is-connected', userId => {//listening for messeage from the server     
+  socket.on('user-is-connected', (userId )=> {//listening for messeage from the server     
     connectToAnotherNewUser(userId, stream);
   })
 })
@@ -52,7 +52,7 @@ socket.on('user-is-disconnected', userId => {
 })
 
 
-thePeer.on('open', id => {
+thePeer.on('open', (id) => {
   socket.emit('joining-the-room', ID_OF_ROOM, id, storeName);
 
 }) //passing the info to server
@@ -64,7 +64,7 @@ const connectToAnotherNewUser = (userId, stream) => { //send that new user our v
   //we will use peer to connect to our user
   const call = thePeer.call(userId, stream)//called our new peer and send our own stream
   const video = document.createElement('video')
-  call.on('stream', userVideoStream => {
+  call.on('stream', (userVideoStream) => {
     addingVideoStream(video, userVideoStream)
     thisCurrentPeer = call.peerConnection//PeerConnection represents a WebRTC connection between the local computer and a remote peer
 
@@ -82,8 +82,9 @@ const addingVideoStream = (video, stream) => { //adding it to stream
   video.srcObject = stream;
   video.addEventListener('loadedmetadata', () => {
     video.play();
+    theVideoGrid.append(video);
   })
-  theVideoGrid.append(video)
+ 
 
 }
 

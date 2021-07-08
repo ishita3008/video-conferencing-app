@@ -37,18 +37,22 @@
    <div class="main">
       <div class="main__left">
          <div class="main__top">
+            <div class="alert">
+               <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+               If not connected by video and audio, the new participant joining the call, please reload the page
+             </div>
             <!--Add date and time at the top-->
             <script>function display_datetime() {
-                  var d = new Date()
+                  var d = new Date();
                   var amOrpm = d.getHours() >= 12 ? ' PM' : ' AM';
                   hours = d.getHours() % 12;
                   hours = hours ? hours : 12;
                   hours = hours.toString().length == 1 ? 0 + hours.toString() : hours;
 
-                  var minutes = d.getMinutes().toString()
+                  var minutes = d.getMinutes().toString();
                   minutes = minutes.length == 1 ? 0 + minutes : minutes;
 
-                  var seconds = d.getSeconds().toString()
+                  var seconds = d.getSeconds().toString();
                   seconds = seconds.length == 1 ? 0 + seconds : seconds;
 
                   var month = (d.getMonth() + 1).toString();

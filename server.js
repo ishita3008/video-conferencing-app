@@ -9,7 +9,11 @@ const { v4: uuidV4 } = require('uuid');//importing v4 version of uuid
 
 
 const server = require('http').Server(app); //setting up express server to be used with further libraries
-const io = require('socket.io')(server);//importing socket.io
+const io = require('socket.io')(server,{
+  cors:{
+    origin: '*'
+  }
+});//importing socket.io
 
 
 const { ExpressPeerServer } = require('peer');//imported peer

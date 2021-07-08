@@ -11,12 +11,12 @@ var thisCurrentPeer;
 const storeName = prompt("Please enter your name");//creating a prompt
 
 
-const thePeer = new Peer(undefined)//,{
-//path: '/peerjs',
-//host: '/',
-//port: '443'//using the port for deployment 
+const thePeer = new Peer(undefined, {
+path: '/peerjs',
+host: '/',
+port: '443'//using the port for deployment 
 
-//}); //created a new peer
+}); //created a new peer
 
 
 const allPeers = {};//to keep a track of who joined the call

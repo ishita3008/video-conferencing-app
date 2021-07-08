@@ -64,10 +64,6 @@ video {
     border-left: 1px solid #3D3D42;
 }
 
-.main__top {
-    /*background-color: #242324;*/
-  
-}
 
 .main__controls {
     color: #D2D2D2;
@@ -121,11 +117,6 @@ video {
     color: white;
     list-style: none;
 }
-
-
-
-
-
 
 
 .main__message_container {

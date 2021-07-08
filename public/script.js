@@ -11,20 +11,19 @@ var thisCurrentPeer;
 const storeName = prompt("Please enter your name");//creating a prompt
 
 
-const thePeer = new Peer (undefined,{
-  path: '/peerjs',
-  host: '/',
-port: '443'//using the port for turn server (coturn) which uses public ip addresses
+const thePeer = new Peer (undefined)//,{
+  //path: '/peerjs',
+  //host: '/',
+//port: '443'//using the port for turn server (coturn) which uses public ip addresses
 
-}); //created a new peer
+//}); //created a new peer
 
 
 const allPeers={};//to keep a track of who joined the call
 let myOwnVideoStream;
 
 
-navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
-   
+navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video   
     video: true,
     audio: true
   }).then(stream => {
@@ -42,22 +41,18 @@ thePeer.on('call', call => {
       })
     })
   
-socket.on('user-is-connected',userId => {//listening for messeage from the server
-     
+socket.on('user-is-connected',userId => {//listening for messeage from the server     
   connectToAnotherNewUser(userId, stream);
-    })
-  
+    })  
   })
 
 socket.on('user-is-disconnected', userId =>{
-
  if(allPeers[userId]) allPeers[userId].close();//only do this when some person is there in the room
- 
+ //window.location.reload();
 }) 
 
 
 thePeer.on('open', id =>{
-
   socket.emit('joining-the-room', ID_OF_ROOM, id, storeName);
 
  }) //passing the info to server
@@ -83,8 +78,7 @@ const connectToAnotherNewUser = (userId, stream) =>{ //send that new user our vi
 }
 
  
-const addingVideoStream=(video, stream) =>{ //adding it to stream
-    
+const addingVideoStream=(video, stream) =>{ //adding it to stream    
   video.srcObject = stream;
     video.addEventListener('loadedmetadata', () => {
       video.play();
@@ -98,7 +92,6 @@ let messages = document.querySelector(".messages");
 let messageText = $("input");
  
   $('html').keydown( a=> {
-
     if (a.which == 13 && messageText.val().length !== 0) {// when enter is pressed, send the message
       //console.log(messageText.val());
       socket.emit('message', messageText.val());//sending from the front end
@@ -124,19 +117,14 @@ socket.on("create-a-Message", (message, userName) => {
 
   })
 
-  //function to enable scrolling and default enabling the last message view
+//function to enable scrolling and default enabling the last message view
 const scrolling =()=>{
-
     let m= $('.main__chat_rectangle');
     m.scrollTop(m.prop("scrollHeight"));
 
   }
 
-   
-
-
 const mutingUnmuting = () => {
-
     const enabled = myOwnVideoStream.getAudioTracks()[0].enabled;//check the status of audio
     if (enabled) {
       myOwnVideoStream.getAudioTracks()[0].enabled = false;//if theres an audio switch it off
@@ -148,8 +136,7 @@ const mutingUnmuting = () => {
     }
   }
 
-const mute = () => {//change icon
-   
+const mute = () => {//change icon   
   const html = `
       <i class="fas fa-microphone"></i>
       <span>Mute</span>
@@ -158,8 +145,7 @@ const mute = () => {//change icon
 
   }
   
-const unmute = () => {//change icon
-    
+const unmute = () => {//change icon    
   const html = `
       <i class="unmute fas fa-microphone-slash"></i>
       <span>Unmute</span>
@@ -168,8 +154,7 @@ const unmute = () => {//change icon
 
   }
 
-const videoStop = () => {
-    
+const videoStop = () => {    
     let enabled = myOwnVideoStream.getVideoTracks()[0].enabled;//check the status of video
     if (enabled) {
       myOwnVideoStream.getVideoTracks()[0].enabled = false;//if theres a video switch it off
@@ -181,8 +166,7 @@ const videoStop = () => {
 
   }
 
-const videoOff = () => {//change icon
-    
+const videoOff = () => {//change icon    
   const html = `
       <i class="fas fa-video"></i>
       <span>Stop Video</span>
@@ -191,8 +175,7 @@ const videoOff = () => {//change icon
 
   }
   
-const videoOn = () => {//change icon
-    
+const videoOn = () => {//change icon   
   const html = `
     <i class="stop fas fa-video-slash"></i>
       <span>Play Video</span>
@@ -203,7 +186,6 @@ const videoOn = () => {//change icon
 
 const inviteOthers = document.querySelector("#inviteButton");
   inviteOthers.addEventListener("click", (e) => {
-
     prompt(
       "Copy this link and invite others",
       window.location.href // displays the URL of website
@@ -212,7 +194,6 @@ const inviteOthers = document.querySelector("#inviteButton");
   });
 
 const shareScreen =()=>{
-
   document.getElementById("screenShare").addEventListener('click',(e)=>{
     navigator.mediaDevices.getDisplayMedia({
       video: {
@@ -239,9 +220,7 @@ const shareScreen =()=>{
   })
   }
 
-
 function stopScreenShare() {
-
     let videoTrack=myOwnVideoStream.getVideoTracks()[0];//stores the camera stream
     let sender = thisCurrentPeer.getSenders().find(function(p){
       return p.track.kind == videoTrack.kind

@@ -1,5 +1,7 @@
 body,h1 {font-family: "Raleway", sans-serif}
+
 body, html {height: 100%}
+
 .bgimg {
   background-image: url("black2.png");
   min-height: 100%;

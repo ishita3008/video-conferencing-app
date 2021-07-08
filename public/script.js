@@ -4,7 +4,7 @@ const socket = io('/')//importing socket.io
 const theVideoGrid = document.getElementById('the_video_grid')//we will put the videos in this variable
 console.log(theVideoGrid);
 const ownVideo = document.createElement('video');// made an element of the type video
-
+ownVideo.controls=true;//adding controls
 
 ownVideo.muted = true;//muted our own video
 var thisCurrentPeer;
@@ -12,10 +12,9 @@ const storeName = prompt("Please enter your name");//creating a prompt
 
 
 const thePeer = new Peer(undefined, {
-host:'peerjs-server.herokuapp.com', 
-secure:true, 
-port:443//using the port for deployment 
-
+  path: "/peerjs",
+  host: "/",
+  port: "443",
 }); //created a new peer
 
 
@@ -28,6 +27,10 @@ navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
   audio: true
 }).then(stream => {
   myOwnVideoStream = stream;
+  myOwnVideoStream.getVideoTracks()[0].enabled = false;//default video off
+    videoOn()//change icon
+    myOwnVideoStream.getAudioTracks()[0].enabled = false;//default video on
+    unmute();//change icon
   addingVideoStream(ownVideo, stream);
 
   //ans the call
@@ -35,6 +38,7 @@ navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
 
     call.answer(stream)//answered the new peer's call
     const video = document.createElement('video')
+    video.controls=true;
     call.on('stream', (userVideoStream) => {
       addingVideoStream(video, userVideoStream)
       thisCurrentPeer = call.peerConnection//PeerConnection represents a WebRTC connection between the local computer and a remote peer
@@ -42,7 +46,9 @@ navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
   })
 
   socket.on('user-is-connected', (userId )=> {//listening for messeage from the server     
-    connectToAnotherNewUser(userId, stream);
+    const fc = () => connectToAnotherNewUser(userId, stream)
+    timerid = setTimeout(fc, 1000 )
+   
   })
 })
 
@@ -64,6 +70,7 @@ const connectToAnotherNewUser = (userId, stream) => { //send that new user our v
   //we will use peer to connect to our user
   const call = thePeer.call(userId, stream)//called our new peer and send our own stream
   const video = document.createElement('video')
+  video.controls=true;
   call.on('stream', (userVideoStream) => {
     addingVideoStream(video, userVideoStream)
     thisCurrentPeer = call.peerConnection//PeerConnection represents a WebRTC connection between the local computer and a remote peer

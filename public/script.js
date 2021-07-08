@@ -12,9 +12,9 @@ const storeName = prompt("Please enter your name");//creating a prompt
 
 
 const thePeer = new Peer(undefined, {
-  host:'rooms-join-to-connect.herokuapp.com', 
-  secure:true, 
-  port:443//using the port for deployment 
+host:'peerjs-server.herokuapp.com', 
+secure:true, 
+port:443//using the port for deployment 
 
 }); //created a new peer
 

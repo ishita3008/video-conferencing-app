@@ -36,6 +36,9 @@ app.get('/join', (req, res) => {
   res.redirect(`/${uuidV4()}`) //redirect to a page with a new gennerated id
 })
 
+app.get('/login', (req, res)=>{
+  res.render('login') //redirect to a page with a new gennerated id
+ })
 
 app.get('/:room', (req, res) => {
   res.render('room', { id_of_the_room: req.params.room }) //passed id to the front end

@@ -1,4 +1,21 @@
 // all javascript for a responsive front end 
+var storeName;
+const id = window.location.href;
+var arr = id.split('/');
+const room = arr[3];
+auth.onAuthStateChanged(user =>{
+  if(user){
+    console.log("signed in")
+    console.log(user.displayName)
+    storeName = user.displayName;
+    //auth.signOut();
+  }
+  else{
+    console.log("signed out")
+    sessionStorage.setItem("roomid", room);
+    window.location.replace('/login')
+  }
+});
 
 const socket = io('/')//importing socket.io
 const theVideoGrid = document.getElementById('the_video_grid')//we will put the videos in this variable
@@ -8,7 +25,7 @@ ownVideo.controls=true;//adding controls
 
 ownVideo.muted = true;//muted our own video
 var thisCurrentPeer;
-const storeName = prompt("Please enter your name");//creating a prompt
+
 
 
 const thePeer = new Peer(undefined, {
@@ -38,7 +55,7 @@ navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
 
     call.answer(stream)//answered the new peer's call
     const video = document.createElement('video')
-    video.controls=true;
+    video.controls=true;//adding controls
     call.on('stream', (userVideoStream) => {
       addingVideoStream(video, userVideoStream)
       thisCurrentPeer = call.peerConnection//PeerConnection represents a WebRTC connection between the local computer and a remote peer
@@ -70,7 +87,7 @@ const connectToAnotherNewUser = (userId, stream) => { //send that new user our v
   //we will use peer to connect to our user
   const call = thePeer.call(userId, stream)//called our new peer and send our own stream
   const video = document.createElement('video')
-  video.controls=true;
+  video.controls=true;//adding controls
   call.on('stream', (userVideoStream) => {
     addingVideoStream(video, userVideoStream)
     thisCurrentPeer = call.peerConnection//PeerConnection represents a WebRTC connection between the local computer and a remote peer

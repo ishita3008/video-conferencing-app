@@ -1,16 +1,18 @@
-// all javascript for a responsive front end 
+// all javascript for a responsive front end
+
+//user authentication
 var storeName;
 const id = window.location.href;
 var arr = id.split('/');// 1. https 2. null 3. domain name 4. uuid (split the url and converted it into array)
 const room = arr[3];
-auth.onAuthStateChanged(user =>{
-  if(user){
+auth.onAuthStateChanged(user => {
+  if (user) {
     console.log("signed in")
     console.log(user.displayName)
     storeName = user.displayName;//when signed in stores the users name for chat purpose
     //auth.signOut();
   }
-  else{
+  else {
     console.log("signed out")
     sessionStorage.setItem("roomid", room);//shared the roomid 
     window.location.replace('/login')// if signed out redirecting to login page
@@ -21,18 +23,18 @@ const socket = io('/')//importing socket.io
 const theVideoGrid = document.getElementById('the_video_grid')//we will put the videos in this variable
 console.log(theVideoGrid);
 const ownVideo = document.createElement('video');// made an element of the type video
-ownVideo.controls=true;//adding controls
+ownVideo.controls = true;//adding controls
 
 ownVideo.muted = true;//muted our own video
 var thisCurrentPeer;
 
 
 
-const thePeer = new Peer(undefined, {
-  path: "/peerjs",
-  host: "/",
-  port: "443",
-}); //created a new peer
+ const thePeer = new Peer(undefined)//, {
+//   path: "/peerjs",
+//   host: "/",
+//   port: "443",
+// }); //created a new peer
 
 
 const allPeers = {};//to keep a track of who joined the call
@@ -45,9 +47,9 @@ navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
 }).then(stream => {
   myOwnVideoStream = stream;
   myOwnVideoStream.getVideoTracks()[0].enabled = false;//default video off
-    videoOn()//change icon
-    myOwnVideoStream.getAudioTracks()[0].enabled = false;//default video on
-    unmute();//change icon
+  videoOn()//change icon
+  myOwnVideoStream.getAudioTracks()[0].enabled = false;//default video on
+  unmute();//change icon
   addingVideoStream(ownVideo, stream);
 
   //ans the call
@@ -55,17 +57,17 @@ navigator.mediaDevices.getUserMedia({ //a promise used to access audio and video
 
     call.answer(stream)//answered the new peer's call
     const video = document.createElement('video')
-    video.controls=true;//adding controls
+    video.controls = true;//adding controls
     call.on('stream', (userVideoStream) => {
       addingVideoStream(video, userVideoStream)
       thisCurrentPeer = call.peerConnection//PeerConnection represents a WebRTC connection between the local computer and a remote peer
     })
   })
 
-  socket.on('user-is-connected', (userId )=> {//listening for messeage from the server     
+  socket.on('user-is-connected', (userId) => {//listening for messeage from the server     
     const fc = () => connectToAnotherNewUser(userId, stream)
-    timerid = setTimeout(fc, 1000 )
-   
+    timerid = setTimeout(fc, 1000)
+
   })
 })
 
@@ -87,7 +89,7 @@ const connectToAnotherNewUser = (userId, stream) => { //send that new user our v
   //we will use peer to connect to our user
   const call = thePeer.call(userId, stream)//called our new peer and send our own stream
   const video = document.createElement('video')
-  video.controls=true;//adding controls
+  video.controls = true;//adding controls
   call.on('stream', (userVideoStream) => {
     addingVideoStream(video, userVideoStream)
     thisCurrentPeer = call.peerConnection//PeerConnection represents a WebRTC connection between the local computer and a remote peer
@@ -108,7 +110,7 @@ const addingVideoStream = (video, stream) => { //adding it to stream
     video.play();
     theVideoGrid.append(video);
   })
- 
+
 
 }
 

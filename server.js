@@ -9,8 +9,8 @@ const { v4: uuidV4 } = require('uuid');//importing v4 version of uuid
 
 
 const server = require('http').Server(app); //setting up express server to be used with further libraries
-const io = require('socket.io')(server,{
-  cors:{
+const io = require('socket.io')(server, {
+  cors: {
     origin: '*'
   }
 });//importing socket.io
@@ -36,9 +36,9 @@ app.get('/join', (req, res) => {
   res.redirect(`/${uuidV4()}`) //redirect to a page with a new gennerated id
 })
 
-app.get('/login', (req, res)=>{
+app.get('/login', (req, res) => {
   res.render('login') //redirect to a page with a new gennerated id
- })
+})
 
 app.get('/:room', (req, res) => {
   res.render('room', { id_of_the_room: req.params.room }) //passed id to the front end

@@ -1,4 +1,4 @@
-const room = sessionStorage.getItem("roomid");
+const room = sessionStorage.getItem("roomid");//shared room id from script.js to login.js
 //const firebaseui = require('firebaseui')
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 var uiConfig = {
@@ -17,7 +17,7 @@ var uiConfig = {
   },
   // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
   signInFlow: 'popup',
-  signInSuccessUrl:'/'+ room,
+  signInSuccessUrl:'/'+ room,//directed to the created/shared room
   signInOptions: [
     // Leave the lines as is for the providers you want to offer your users.
     // firebase.auth.GoogleAuthProvider.PROVIDER_ID,

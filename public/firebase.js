@@ -13,5 +13,6 @@
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
+//auth utility variable for our firebase app
  const auth=firebase.auth();
  const db=firebase.firestore();

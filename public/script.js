@@ -1,19 +1,19 @@
 // all javascript for a responsive front end 
 var storeName;
 const id = window.location.href;
-var arr = id.split('/');
+var arr = id.split('/');// 1. https 2. null 3. domain name 4. uuid (split the url and converted it into array)
 const room = arr[3];
 auth.onAuthStateChanged(user =>{
   if(user){
     console.log("signed in")
     console.log(user.displayName)
-    storeName = user.displayName;
+    storeName = user.displayName;//when signed in stores the users name for chat purpose
     //auth.signOut();
   }
   else{
     console.log("signed out")
-    sessionStorage.setItem("roomid", room);
-    window.location.replace('/login')
+    sessionStorage.setItem("roomid", room);//shared the roomid 
+    window.location.replace('/login')// if signed out redirecting to login page
   }
 });
 

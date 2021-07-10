@@ -30,11 +30,11 @@ var thisCurrentPeer;
 
 
 
- const thePeer = new Peer(undefined)//, {
-//   path: "/peerjs",
-//   host: "/",
-//   port: "443",
-// }); //created a new peer
+ const thePeer = new Peer(undefined, {
+  path: "/peerjs",
+  host: "/",
+  port: "443",
+}); //created a new peer
 
 
 const allPeers = {};//to keep a track of who joined the call

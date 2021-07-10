@@ -24,7 +24,7 @@
    <!--font awesome for icons-->
    <script src="https://kit.fontawesome.com/c939d0e917.js"></script>
    <!--css file-->
-   <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="room_style.css">
    <!--socket.io-->
    <script src="/socket.io/socket.io.js"></script>
    <!--peer js-->
@@ -107,12 +107,12 @@
                   <span>Invite</span>
                </div>
 
-               <div id="screenShare" class="main__controls__button">
+               <div onclick=shareScreen() id="screenShare" class="main__controls__button">
                   <i class="fas fa-desktop"></i>
                   <span>Screen Share</span>
                </div>
                <div class="main__controls__button">
-                  <div id="exit" class="main__controls__button" href="/">EXIT</div>
+                  <div onclick=exitFunc() id="exit" class="main__controls__button" href="/">EXIT</div>
                </div>
             </div>
          </div>

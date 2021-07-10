@@ -18,17 +18,42 @@
     <!-- Add Firebase products that you want to use -->
     <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-firestore.js"></script>
+    <!--bootstrap-->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+   integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<!--bootstrap for js-->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+   integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+   crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+   integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+   crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="login.css">
     <title>login</title>
 </head>
 
 <body>
-
-    <h2>Welcome to My Awesome App</h2>
+    <div class="main">
+        <div class="continue w3-jumbo">
+            <h2>Login to continue with Rooms meeting</h2>
+        </div>
+     
+    <div class="container">
     <div id="firebaseui-auth-container"></div>
     <div id="loader">Loading...</div>
-
+    </div>
+    <div class="back w3-display-middle" >
+        <h3><a href="/" >Go back to home</a></h3>
+    </div>
+</div>
+    
     <script src="firebase.js"></script>
     <script src="login.js"></script>
+
+
+    
 </body>
 
 </html>

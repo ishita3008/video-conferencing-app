@@ -219,32 +219,37 @@ inviteOthers.addEventListener("click", (e) => {
 
 });
 
-const shareScreen = () => {
-  document.getElementById("screenShare").addEventListener('click', (e) => {
-    navigator.mediaDevices.getDisplayMedia({
-      video: {
-        cursor: "always"
-      },
-      audio: {
-        echoCancellation: true,
-        noiseSuppression: true
-      }
-    }).then((stream) => {
-
-      let videoTrack = stream.getVideoTracks()[0];//stores the screen shared stream
-      videoTrack.onended = function () {
-        stopScreenShare();
-
-      }
-      let sender = thisCurrentPeer.getSenders().find(function (p) {//getSenders() returns an array of RTCRtpSender objects, each of which represents the RTP sender responsible for transmitting one track's data.
-        return p.track.kind == videoTrack.kind // kind contains a string indicating the category of video in VideoTrack
+const exit = document.querySelector('#exit');
+      exit.addEventListener("click",(e)=>{
+        ownVideo.remove();
+        auth.signOut();
       })
 
-      sender.replaceTrack(videoTrack);
-
-    })
-  })
-}
+      const shareScreen = document.querySelector('#screenShare')
+      screenShare.addEventListener('click',(e)=>{
+        navigator.mediaDevices.getDisplayMedia({
+          video: {
+            cursor: "always"
+          },
+          audio: {
+            echoCancellation: true,
+            noiseSuppression: true
+          }
+        }).then((stream)=>{
+    
+          let videoTrack = stream.getVideoTracks()[0];//stores the screen shared stream
+          videoTrack.onended= function(){
+            stopScreenShare();
+    
+          }
+          let sender = thisCurrentPeer.getSenders().find(function(p){//getSenders() returns an array of RTCRtpSender objects, each of which represents the RTP sender responsible for transmitting one track's data.
+            return p.track.kind == videoTrack.kind // kind contains a string indicating the category of video in VideoTrack
+          })
+    
+           sender.replaceTrack(videoTrack);
+    
+        })
+      });
 
 function stopScreenShare() {
   let videoTrack = myOwnVideoStream.getVideoTracks()[0];//stores the camera stream
@@ -254,3 +259,4 @@ function stopScreenShare() {
   sender.replaceTrack(videoTrack) //replaces camera stream back once screen share if off
 
 }
+

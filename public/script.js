@@ -29,7 +29,6 @@ ownVideo.muted = true;//muted our own video
 var thisCurrentPeer;
 
 
-
 const thePeer = new Peer(undefined, {
   path: "/peerjs",
   host: "/",

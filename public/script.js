@@ -1,7 +1,7 @@
 // all javascript for a responsive front end
 
 //user authentication
-var storeName;
+var storeName;//used for storing the name of the user to be used in chat
 const id = window.location.href;
 var arr = id.split('/');// 1. https 2. null 3. domain name 4. uuid (split the url and converted it into array)
 const room = arr[3];
@@ -29,11 +29,11 @@ ownVideo.muted = true;//muted our own video
 var thisCurrentPeer;
 
 
-const thePeer = new Peer(undefined, {
-  path: "/peerjs",
-  host: "/",
-  port: "443",
-}); //created a new peer
+ const thePeer = new Peer(undefined)//, {
+//   path: "/peerjs",
+//   host: "/",
+//   port: "443",
+// }); //created a new peer
 
 
 const allPeers = {};//to keep a track of who joined the call

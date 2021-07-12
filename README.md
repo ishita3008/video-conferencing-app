@@ -38,7 +38,7 @@ Open on browser `http://localhost:3010/`
 -	DATE AND TIME DISPLAY
 -	INVITE MORE THAN 2 PEOPLE
 -	HOMEPAGE WITH A CREATE A NEW ROOM 
--	CUT CALL
+-	END CALL
 -	LOG OUT
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ### AGILE METHODOLOGIES USED:

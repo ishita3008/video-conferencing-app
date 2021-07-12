@@ -19,6 +19,7 @@
 
 ### HOW TO RUN ON LOCAL MACHINE:
 ```
+clone https://github.com/ishita3008/video-conferencing-app.git
 npm install
 npm nodemon server.js
 run on http://localhost:3010/

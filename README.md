@@ -45,7 +45,7 @@ Open on browser `http://localhost:3010/`
 1.	I categorized the whole app into **theme, epics, user stories and tasks** and thereafter planned the work flow into **4 sprints** and worked accordingly.
 2.	I kept on noting down the **bugs and issues** I encountered and the ones which I was able to resolve, jotted down under **closed issues** and the ones I am still working on figuring out, I have put them under **open issues**.
 3.	Further, I have kept the ideas and features I wish to implement in the **future under the backlog** table with proper segregation into epics, user stories and tasks.
-**The detailed agile approach** I followed: https://1drv.ms/x/s!AuF_GqhwqqsxoHzTYqMtRk0upvIW?e=gceTC8
+**The detailed agile approach** I followed: https://1drv.ms/x/s!AuF_GqhwqqsxoHzTYqMtRk0upvIW?e=GLcqeA
 
 4.	I also kept a track of the work To Do, the work Done and the work I was currently doing during all these 4 sprints using the **Scrum Board** on **Azure Dev Ops**.
 
